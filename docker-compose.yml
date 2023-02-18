@@ -1,0 +1,34 @@
+version: "3.4"
+
+services:
+  cartorchestrator:
+    image: ${DOCKER_REGISTRY-}cartorchestrator
+    ports:
+      - "80"
+    build:
+      context: .
+      dockerfile: CartOrchestrator/Dockerfile
+
+  dairyservice:
+    image: ${DOCKER_REGISTRY-}dairyservice
+    ports:
+      - "80"
+    build:
+      context: .
+      dockerfile: DairyService/Dockerfile
+    networks:
+      default:
+        aliases:
+          - dairy-service
+
+  produceservice:
+    image: ${DOCKER_REGISTRY-}produceservice
+    ports:
+      - "80"
+    build:
+      context: .
+      dockerfile: ProduceService/Dockerfile
+    networks:
+      default:
+        aliases:
+          - produce-service
