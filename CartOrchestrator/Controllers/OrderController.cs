@@ -4,7 +4,7 @@ using CartOrchestrator.Models;
 using CartOrchestrator.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SagaDemo.Controllers;
+namespace CartOrchestrator.Controllers;
 
 [ApiController]
 [Route("[controller]")]
