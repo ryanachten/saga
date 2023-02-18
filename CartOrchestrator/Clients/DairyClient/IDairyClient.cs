@@ -1,8 +1,9 @@
 ﻿
-namespace CartOrchestrator.Clients.DairyClient
+namespace CartOrchestrator.Clients.DairyClient;
+
+public interface IDairyClient
 {
-    public interface IDairyClient
-    {
-        Task SaveOrder(IEnumerable<DairyItem> items);
-    }
+    Task SaveOrder(IEnumerable<DairyItem> items);
+
+    Task DeleteOrder(IEnumerable<DairyItem> items);
 }

@@ -1,11 +1,11 @@
-version: '3.4'
+version: "3.4"
 
 services:
   cartorchestrator:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "80"
+      - "5099:80"
 
   dairyservice:
     environment:
@@ -13,10 +13,8 @@ services:
     ports:
       - "80"
 
-
   produceservice:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
-

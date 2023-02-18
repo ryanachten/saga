@@ -21,4 +21,14 @@ public class ProduceClient : BaseClient, IProduceClient
             throw new Exception(response.ReasonPhrase);
         }
     }
+
+    public async Task DeleteOrder(IEnumerable<ProduceItem> items)
+    {
+        var request = FormatDeleteRequest(items, "order");
+        var response = await _httpClient.SendAsync(request);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(response.ReasonPhrase);
+        }
+    }
 }

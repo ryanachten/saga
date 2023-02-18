@@ -21,4 +21,14 @@ public class DairyClient : BaseClient, IDairyClient
             throw new Exception(response.ReasonPhrase);
         }
     }
+
+    public async Task DeleteOrder(IEnumerable<DairyItem> items)
+    {
+        var request = FormatDeleteRequest(items, "order");
+        var response = await _httpClient.SendAsync(request);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(response.ReasonPhrase);
+        }
+    }
 }

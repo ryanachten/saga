@@ -1,8 +1,10 @@
 ﻿
-namespace CartOrchestrator.Clients.ProduceClient
+namespace CartOrchestrator.Clients.ProduceClient;
+
+public interface IProduceClient
 {
-    public interface IProduceClient
-    {
-        Task SaveOrder(IEnumerable<ProduceItem> items);
-    }
+    Task SaveOrder(IEnumerable<ProduceItem> items);
+
+    Task DeleteOrder(IEnumerable<ProduceItem> items);
+
 }
