@@ -32,3 +32,17 @@ services:
       default:
         aliases:
           - produce-service
+
+  notificationservice:
+    image: ${DOCKER_REGISTRY-}notificationservice
+    build:
+      context: .
+      dockerfile: NotificationService/Dockerfile
+
+
+  deliveryservice:
+    image: ${DOCKER_REGISTRY-}deliveryservice
+    build:
+      context: .
+      dockerfile: DeliveryService/Dockerfile
+

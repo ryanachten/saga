@@ -18,3 +18,15 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "5295:80"
+
+  notificationservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5292:80"
+
+  deliveryservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5290:80"
