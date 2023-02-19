@@ -1,6 +1,6 @@
-﻿namespace CartOrchestrator.Clients.DairyClient;
+﻿namespace CartService.Clients.ProduceClient;
 
-public class DairyItem
+public class ProduceItem
 {
     public string Name { get; set; } = string.Empty;
     public int Count { get; set; }

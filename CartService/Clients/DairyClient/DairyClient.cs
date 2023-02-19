@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace CartOrchestrator.Clients.DairyClient;
+namespace CartService.Clients.DairyClient;
 
 public class DairyClient : BaseClient, IDairyClient
 {

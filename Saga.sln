@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartOrchestrator", "CartOrchestrator\CartOrchestrator.csproj", "{B91F13C5-81C0-4F63-86D3-1254DDF07C09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartService", "CartService\CartService.csproj", "{B91F13C5-81C0-4F63-86D3-1254DDF07C09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProduceService", "ProduceService\ProduceService.csproj", "{737329E2-4883-40F0-84AA-1856F457BA72}"
 EndProject

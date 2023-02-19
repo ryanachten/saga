@@ -1,5 +1,5 @@
 ﻿
-namespace CartOrchestrator.Clients.DairyClient;
+namespace CartService.Clients.DairyClient;
 
 public interface IDairyClient
 {

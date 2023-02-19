@@ -1,4 +1,4 @@
-﻿namespace CartOrchestrator.Clients.ProduceClient;
+﻿namespace CartService.Clients.ProduceClient;
 
 public class ProduceClientSettings
 {

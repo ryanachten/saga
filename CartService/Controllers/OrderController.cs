@@ -1,10 +1,10 @@
-using CartOrchestrator.Clients.DairyClient;
-using CartOrchestrator.Clients.ProduceClient;
-using CartOrchestrator.Models;
-using CartOrchestrator.Models.Enums;
+using CartService.Clients.DairyClient;
+using CartService.Clients.ProduceClient;
+using CartService.Models;
+using CartService.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CartOrchestrator.Controllers;
+namespace CartService.Controllers;
 
 [ApiController]
 [Route("[controller]")]

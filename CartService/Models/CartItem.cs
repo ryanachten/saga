@@ -1,4 +1,4 @@
-﻿namespace CartOrchestrator.Models;
+﻿namespace CartService.Models;
 
 public class CartItem
 {

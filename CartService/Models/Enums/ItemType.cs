@@ -1,4 +1,4 @@
-﻿namespace CartOrchestrator.Models.Enums;
+﻿namespace CartService.Models.Enums;
 
 public enum ItemType
 {

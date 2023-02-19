@@ -1,13 +1,13 @@
 version: "3.4"
 
 services:
-  cartorchestrator:
-    image: ${DOCKER_REGISTRY-}cartorchestrator
+  cartservice:
+    image: ${DOCKER_REGISTRY-}cartservice
     ports:
       - "80"
     build:
       context: .
-      dockerfile: CartOrchestrator/Dockerfile
+      dockerfile: CartService/Dockerfile
 
   dairyservice:
     image: ${DOCKER_REGISTRY-}dairyservice

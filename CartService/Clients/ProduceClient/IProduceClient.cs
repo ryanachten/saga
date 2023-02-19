@@ -1,5 +1,5 @@
 ﻿
-namespace CartOrchestrator.Clients.ProduceClient;
+namespace CartService.Clients.ProduceClient;
 
 public interface IProduceClient
 {

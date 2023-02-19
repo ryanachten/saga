@@ -1,5 +1,5 @@
-using CartOrchestrator.Clients.DairyClient;
-using CartOrchestrator.Clients.ProduceClient;
+using CartService.Clients.DairyClient;
+using CartService.Clients.ProduceClient;
 
 var builder = WebApplication.CreateBuilder(args);
 

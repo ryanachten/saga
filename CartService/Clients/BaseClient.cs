@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace CartOrchestrator.Clients
+namespace CartService.Clients
 {
     public abstract class BaseClient
     {

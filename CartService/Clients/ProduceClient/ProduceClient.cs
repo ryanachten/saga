@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace CartOrchestrator.Clients.ProduceClient;
+namespace CartService.Clients.ProduceClient;
 
 public class ProduceClient : BaseClient, IProduceClient
 {

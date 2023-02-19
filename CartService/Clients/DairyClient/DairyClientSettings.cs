@@ -1,4 +1,4 @@
-﻿namespace CartOrchestrator.Clients.DairyClient;
+﻿namespace CartService.Clients.DairyClient;
 
 public class DairyClientSettings
 {
