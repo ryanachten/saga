@@ -8,14 +8,14 @@ namespace CartService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class OrderController : ControllerBase
+public class CheckoutController : ControllerBase
 {
-    private readonly ILogger<OrderController> _logger;
+    private readonly ILogger<CheckoutController> _logger;
     private readonly IDairyClient _dairyClient;
     private readonly IProduceClient _produceClient;
 
-    public OrderController(
-        ILogger<OrderController> logger,
+    public CheckoutController(
+        ILogger<CheckoutController> logger,
         IDairyClient dairyClient,
         IProduceClient produceClient
     )
