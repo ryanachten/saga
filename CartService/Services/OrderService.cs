@@ -32,45 +32,31 @@ public class OrderService : IOrderService
 
     public async Task SubmitOrder(IEnumerable<CartItem> items)
     {
-        var dairyItems = items.Where(x => x.Type == ItemType.DAIRY).Select(x => new DairyItem()
-        {
-            Name = x.Name,
-            Count = x.Count
-        });
+        _logger.LogInformation("**** Submitting order ****");
+        foreach (var item in items) _logger.LogInformation("item: {item.Name} count: {item.Count}", item.Name, item.Count);
+
+        var dairyItems = GetDairyItems(items);
         await _dairyClient.SaveOrder(dairyItems);
 
-        var produceItems = items.Where(x => x.Type == ItemType.PRODUCE).Select(x => new ProduceItem()
-        {
-            Name = x.Name,
-            Count = x.Count
-        });
+        var produceItems = GetProduceItems(items);
         await _produceClient.SaveOrder(produceItems);
 
-        var orderId = await _deliveryClient.SaveOrder(new DeliveryOrder()
-        {
-            Items = items.Select(x => new DeliveryItem() { Name = x.Name, Count = x.Count })
-        });
+        var orderId = await _deliveryClient.SaveOrder(GetDeliveryOrder(items));
 
         await _notificationClient.PushOrderNotification(orderId);
     }
 
     public async Task SubmitOrchestratedOrder(IEnumerable<CartItem> items)
     {
-        var dairyItems = items.Where(x => x.Type == ItemType.DAIRY).Select(x => new DairyItem()
-        {
-            Name = x.Name,
-            Count = x.Count
-        });
+        _logger.LogInformation("**** Submitting order ****");
+        foreach (var item in items) _logger.LogInformation("item: {item.Name} count: {item.Count}", item.Name, item.Count);
 
         // We don't need to perform any compensating transactions in this failure case
         // given there are no prior transactions to rollback
+        var dairyItems = GetDairyItems(items);
         await _dairyClient.SaveOrder(dairyItems);
 
-        var produceItems = items.Where(x => x.Type == ItemType.PRODUCE).Select(x => new ProduceItem()
-        {
-            Name = x.Name,
-            Count = x.Count
-        });
+        var produceItems = GetProduceItems(items);
         try
         {
             await _produceClient.SaveOrder(produceItems);
@@ -81,21 +67,15 @@ public class OrderService : IOrderService
 
             // In the case of an error scenario
             // we need to use compensating transactions to rollback prior transactions
-            _logger.LogInformation("Rolling back dairy orders");
             await _dairyClient.DeleteOrder(dairyItems);
 
-            // Once finished rolling back, we throw the exeception
-            // to ensure the error isn't swallowed
             throw;
         }
 
         Guid orderId;
         try
         {
-            orderId = await _deliveryClient.SaveOrder(new DeliveryOrder()
-            {
-                Items = items.Select(x => new DeliveryItem() { Name = x.Name, Count = x.Count })
-            });
+            orderId = await _deliveryClient.SaveOrder(GetDeliveryOrder(items));
         }
         catch (Exception ex)
         {
@@ -103,17 +83,32 @@ public class OrderService : IOrderService
 
             // In the case of an error scenario
             // we need to use compensating transactions to rollback prior transactions
-            _logger.LogInformation("Rolling back dairy orders");
             await _dairyClient.DeleteOrder(dairyItems);
-
-            _logger.LogInformation("Rolling back produce orders");
             await _produceClient.DeleteOrder(produceItems);
 
-            // Once finished rolling back, we throw the exeception
-            // to ensure the error isn't swallowed
             throw;
         }
 
         await _notificationClient.PushOrderNotification(orderId);
     }
+
+    private static IEnumerable<DairyItem> GetDairyItems(IEnumerable<CartItem> items)
+        => items.Where(x => x.Type == ItemType.DAIRY).Select(x => new DairyItem()
+        {
+            Name = x.Name,
+            Count = x.Count
+        });
+
+    private static IEnumerable<ProduceItem> GetProduceItems(IEnumerable<CartItem> items)
+        => items.Where(x => x.Type == ItemType.PRODUCE).Select(x => new ProduceItem()
+        {
+            Name = x.Name,
+            Count = x.Count
+        });
+
+    private static DeliveryOrder GetDeliveryOrder(IEnumerable<CartItem> items)
+        => new()
+        {
+            Items = items.Select(x => new DeliveryItem() { Name = x.Name, Count = x.Count })
+        };
 }
