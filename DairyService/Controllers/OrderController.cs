@@ -31,11 +31,11 @@ public class OrderController : ControllerBase
     {
         foreach (DairyItem item in items)
         {
-            _logger.LogInformation("Adding dairy item: {item.Name} count:{item.Count}", item.Name, item.Count);
             if (Stock.Items.ContainsKey(item.Name))
             {
                 Stock.Items[item.Name] -= item.Count;
             }
+            _logger.LogInformation("Added dairy order. Stock now: {item.Name} count: {Stock.Items[item.Name]}", item.Name, Stock.Items[item.Name]);
         }
     }
 
@@ -44,11 +44,11 @@ public class OrderController : ControllerBase
     {
         foreach (DairyItem item in items)
         {
-            _logger.LogWarning("Deleting dairy item: {item.Name} count:{item.Count}", item.Name, item.Count);
             if (Stock.Items.ContainsKey(item.Name))
             {
                 Stock.Items[item.Name] += item.Count;
             }
+            _logger.LogInformation("Deleted dairy order. Stock now: {item.Name} count: {Stock.Items[item.Name]}", item.Name, Stock.Items[item.Name]);
         }
     }
 }

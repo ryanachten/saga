@@ -38,11 +38,17 @@ services:
     build:
       context: .
       dockerfile: NotificationService/Dockerfile
-
+    networks:
+      default:
+        aliases:
+          - notification-service
 
   deliveryservice:
     image: ${DOCKER_REGISTRY-}deliveryservice
     build:
       context: .
       dockerfile: DeliveryService/Dockerfile
-
+    networks:
+      default:
+        aliases:
+          - delivery-service

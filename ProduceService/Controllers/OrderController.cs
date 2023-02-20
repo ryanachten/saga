@@ -30,11 +30,11 @@ public class OrderController : ControllerBase
     {
         foreach (ProduceItem item in items)
         {
-            _logger.LogInformation("Adding produce item: {item.Name} count:{item.Count}", item.Name, item.Count);
             if (Stock.Items.ContainsKey(item.Name))
             {
                 Stock.Items[item.Name] -= item.Count;
             }
+            _logger.LogInformation("Added produce order. Stock now: {item.Name} count: {Stock.Items[item.Name]}", item.Name, Stock.Items[item.Name]);
         }
     }
 
@@ -43,11 +43,11 @@ public class OrderController : ControllerBase
     {
         foreach (ProduceItem item in items)
         {
-            _logger.LogWarning("Deleting produce item: {item.Name} count:{item.Count}", item.Name, item.Count);
             if (Stock.Items.ContainsKey(item.Name))
             {
                 Stock.Items[item.Name] += item.Count;
             }
+            _logger.LogInformation("Deleted produce order. Stock now: {item.Name} count: {Stock.Items[item.Name]}", item.Name, Stock.Items[item.Name]);
         }
     }
 }

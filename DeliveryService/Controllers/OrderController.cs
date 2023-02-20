@@ -25,12 +25,16 @@ public class OrderController : ControllerBase
     {
         Orders.Items.Add(order);
 
+        _logger.LogInformation("Dispatching order: {order.Id}", order.Id);
+
         return Ok(order.Id);
     }
 
     [HttpDelete("{id}")]
     public void Delete(Guid id)
     {
+        _logger.LogWarning("Deleting order: {id}", id);
+
         Orders.Items.RemoveAll(x => x.Id == id);
     }
 }

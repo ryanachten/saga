@@ -1,8 +1,10 @@
-﻿namespace CartService.Models;
+﻿using CartService.Models.Enums;
+
+namespace CartService.Models;
 
 public class CartItem
 {
-    public string Type { get; set; } = string.Empty;
+    public ItemType Type { get; set; }
     public string Name { get; set; } = string.Empty;
     public int Count { get; set; }
 }
