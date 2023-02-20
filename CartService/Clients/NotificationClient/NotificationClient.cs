@@ -6,7 +6,11 @@ public class NotificationClient : BaseClient, INotificationClient
 {
     private readonly HttpClient _httpClient;
 
-    public NotificationClient(HttpClient httpClient, IOptions<NotificationClientSettings> settings)
+    public NotificationClient(
+        HttpClient httpClient,
+        IOptions<NotificationClientSettings> settings,
+        ILogger<NotificationClient> logger
+    ) : base(httpClient, logger)
     {
         _httpClient = httpClient;
         _httpClient.BaseAddress = new Uri(settings.Value.BaseUri);

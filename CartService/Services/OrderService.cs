@@ -30,6 +30,9 @@ public class OrderService : IOrderService
         _notificationClient = notificationClient;
     }
 
+    /// <summary>
+    /// Submits an order without transaction management
+    /// </summary>
     public async Task SubmitOrder(IEnumerable<CartItem> items)
     {
         _logger.LogInformation("**** Submitting order ****");
@@ -46,48 +49,25 @@ public class OrderService : IOrderService
         await _notificationClient.PushOrderNotification(orderId);
     }
 
+    /// <summary>
+    /// Submits an order using saga orchestration for transaction management
+    /// </summary>
     public async Task SubmitOrchestratedOrder(IEnumerable<CartItem> items)
     {
         _logger.LogInformation("**** Submitting order ****");
         foreach (var item in items) _logger.LogInformation("item: {item.Name} count: {item.Count}", item.Name, item.Count);
 
-        // We don't need to perform any compensating transactions in this failure case
-        // given there are no prior transactions to rollback
         var dairyItems = GetDairyItems(items);
         await _dairyClient.SaveOrder(dairyItems);
 
         var produceItems = GetProduceItems(items);
-        try
-        {
-            await _produceClient.SaveOrder(produceItems);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("Error submitting produce: {ex.Message}", ex.Message);
+        await _produceClient.SaveOrder(produceItems, () => _dairyClient.DeleteOrder(dairyItems));
 
-            // In the case of an error scenario
-            // we need to use compensating transactions to rollback prior transactions
-            await _dairyClient.DeleteOrder(dairyItems);
-
-            throw;
-        }
-
-        Guid orderId;
-        try
+        var orderId = await _deliveryClient.SaveOrder(GetDeliveryOrder(items), async () =>
         {
-            orderId = await _deliveryClient.SaveOrder(GetDeliveryOrder(items));
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("Error submitting delivery: {ex.Message}", ex.Message);
-
-            // In the case of an error scenario
-            // we need to use compensating transactions to rollback prior transactions
             await _dairyClient.DeleteOrder(dairyItems);
             await _produceClient.DeleteOrder(produceItems);
-
-            throw;
-        }
+        });
 
         await _notificationClient.PushOrderNotification(orderId);
     }

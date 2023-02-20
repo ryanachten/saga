@@ -6,7 +6,11 @@ public class DairyClient : BaseClient, IDairyClient
 {
     private readonly HttpClient _httpClient;
 
-    public DairyClient(HttpClient httpClient, IOptions<DairyClientSettings> settings)
+    public DairyClient(
+        HttpClient httpClient,
+        IOptions<DairyClientSettings> settings,
+        ILogger<DairyClient> logger
+    ) : base(httpClient, logger)
     {
         _httpClient = httpClient;
         _httpClient.BaseAddress = new Uri(settings.Value.BaseUri);
