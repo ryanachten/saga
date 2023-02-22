@@ -1,0 +1,306 @@
+{
+  "info": {
+    "_postman_id": "4032db13-2aa3-42d5-8543-2e12b755551d",
+    "name": "Saga",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Cart Checkout (Simple)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n    {\r\n        \"type\": \"DAIRY\",\r\n        \"name\": \"cheese\",\r\n        \"count\": 1\r\n    },\r\n    {\r\n        \"type\": \"PRODUCE\",\r\n        \"name\": \"apple\",\r\n        \"count\": 3\r\n    }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5099/checkout",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5099",
+          "path": ["checkout"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cart Checkout (Orchestrated)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n    {\r\n        \"type\": \"DAIRY\",\r\n        \"name\": \"cheese\",\r\n        \"count\": 1\r\n    },\r\n    {\r\n        \"type\": \"PRODUCE\",\r\n        \"name\": \"apple\",\r\n        \"count\": 3\r\n    }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5099/checkout/orchestrated",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5099",
+          "path": ["checkout", "orchestrated"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Dairy Order",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[{\r\n    \"name\": \"Milk\",\r\n    \"count\": 1\r\n}]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5230/order/cheese",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5230",
+          "path": ["order", "cheese"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Dairy Order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[{\r\n    \"name\": \"cheese\",\r\n    \"count\": 1\r\n}]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5230/order",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5230",
+          "path": ["order"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Dairy Order",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[{\r\n    \"name\": \"cheese\",\r\n    \"count\": 1\r\n}]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5230/order",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5230",
+          "path": ["order"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Produce Order",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5295/order/apple",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5295",
+          "path": ["order", "apple"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Produce Order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[{\r\n    \"name\": \"apple\",\r\n    \"count\": 3\r\n}]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5295/order",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5295",
+          "path": ["order"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Produce Order",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[{\r\n    \"name\": \"apple\",\r\n    \"count\": 3\r\n}]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5295/order",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5295",
+          "path": ["order"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delivery Order",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[{\r\n    \"name\": \"Carrots\",\r\n    \"count\": 3\r\n}]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5290/order",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5290",
+          "path": ["order"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delivery Order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"items\": [\r\n        {\r\n            \"name\": \"apple\",\r\n            \"count\": 3\r\n        },\r\n        {\r\n            \"name\": \"cheese\",\r\n            \"count\": 1\r\n        }\r\n    ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5290/order",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5290",
+          "path": ["order"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delivery Order",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5290/order/00000000-0000-0000-0000-000000000000",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5290",
+          "path": ["order", "00000000-0000-0000-0000-000000000000"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Notification Order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5292/order/9b124811-11c2-49fe-842e-181ffa6a8375",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5292",
+          "path": ["order", "9b124811-11c2-49fe-842e-181ffa6a8375"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
