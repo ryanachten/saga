@@ -4,7 +4,7 @@ services:
   cartservice:
     image: ${DOCKER_REGISTRY-}cartservice
     ports:
-      - "80"
+      - "8080"
     build:
       context: .
       dockerfile: CartService/Dockerfile
@@ -13,6 +13,8 @@ services:
     image: ${DOCKER_REGISTRY-}dairyservice
     ports:
       - "80"
+    environment:
+        ASPNETCORE_HTTP_PORTS: 80
     build:
       context: .
       dockerfile: DairyService/Dockerfile
@@ -25,6 +27,8 @@ services:
     image: ${DOCKER_REGISTRY-}produceservice
     ports:
       - "80"
+    environment:
+        ASPNETCORE_HTTP_PORTS: 80
     build:
       context: .
       dockerfile: ProduceService/Dockerfile
@@ -35,6 +39,10 @@ services:
 
   notificationservice:
     image: ${DOCKER_REGISTRY-}notificationservice
+    ports:
+      - "80"
+    environment:
+        ASPNETCORE_HTTP_PORTS: 80
     build:
       context: .
       dockerfile: NotificationService/Dockerfile
@@ -45,6 +53,10 @@ services:
 
   deliveryservice:
     image: ${DOCKER_REGISTRY-}deliveryservice
+    ports:
+      - "80"
+    environment:
+        ASPNETCORE_HTTP_PORTS: 80
     build:
       context: .
       dockerfile: DeliveryService/Dockerfile

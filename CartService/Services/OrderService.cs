@@ -1,4 +1,4 @@
-﻿using CartService.Clients.DairyClient;
+using CartService.Clients.DairyClient;
 using CartService.Clients.DeliveryClient;
 using CartService.Clients.NotificationClient;
 using CartService.Clients.ProduceClient;
@@ -36,7 +36,7 @@ public class OrderService : IOrderService
     public async Task SubmitOrder(IEnumerable<CartItem> items)
     {
         _logger.LogInformation("**** Submitting order ****");
-        foreach (var item in items) _logger.LogInformation("item: {item.Name} count: {item.Count}", item.Name, item.Count);
+        foreach (var item in items) _logger.LogInformation("item: {Name} count: {Count}", item.Name, item.Count);
 
         var dairyItems = GetDairyItems(items);
         await _dairyClient.SaveOrder(dairyItems);
@@ -55,7 +55,7 @@ public class OrderService : IOrderService
     public async Task SubmitOrchestratedOrder(IEnumerable<CartItem> items)
     {
         _logger.LogInformation("**** Submitting order ****");
-        foreach (var item in items) _logger.LogInformation("item: {item.Name} count: {item.Count}", item.Name, item.Count);
+        foreach (var item in items) _logger.LogInformation("item: {Name} count: {Count}", item.Name, item.Count);
 
         var dairyItems = GetDairyItems(items);
         await _dairyClient.SaveOrder(dairyItems);

@@ -6,7 +6,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - Logging__LogLevel__System.Net.Http.HttpClient=None
     ports:
-      - "5099:80"
+      - "5099:8080"
 
   dairyservice:
     environment:
