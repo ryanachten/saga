@@ -2,7 +2,7 @@ using CartService.Clients.DairyClient;
 using CartService.Clients.DeliveryClient;
 using CartService.Clients.NotificationClient;
 using CartService.Clients.ProduceClient;
-using CartService.Services;
+using CartService.Extensions;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +14,7 @@ builder.Services.AddControllers().AddJsonOptions(opt =>
     opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddOrderStrategies();
 
 builder.Services.AddHttpClient<IDairyClient, DairyClient>();
 builder.Services.Configure<DairyClientSettings>(builder.Configuration.GetSection("DairyService"));
