@@ -4,7 +4,7 @@ using CartService.Clients.NotificationClient;
 using CartService.Clients.ProduceClient;
 using CartService.Models;
 
-namespace CartService.Strategies;
+namespace CartService.Strategies.OrderStrategy;
 
 public interface IOrchestratedOrderStrategy
 {

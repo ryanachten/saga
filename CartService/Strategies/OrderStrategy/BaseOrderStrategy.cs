@@ -4,7 +4,7 @@ using CartService.Clients.ProduceClient;
 using CartService.Models;
 using CartService.Models.Enums;
 
-namespace CartService.Strategies;
+namespace CartService.Strategies.OrderStrategy;
 
 public abstract class BaseOrderStrategy
 {

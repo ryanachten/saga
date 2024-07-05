@@ -1,26 +1,18 @@
 using CartService.Models;
-using CartService.Strategies;
+using CartService.Models.Enums;
+using CartService.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CartService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CheckoutController(
-    ISimpleOrderStrategy simpleOrderStrategy, 
-    IOrchestratedOrderStrategy orchestratedOrderStrategy
-) : ControllerBase
+public class CheckoutController(IOrderService orderService) : ControllerBase
 {
 
     [HttpPost]
-    public async Task CheckoutSimple(List<CartItem> items)
+    public async Task CheckoutSimple(List<CartItem> items, [FromQuery] OrderStrategy? strategy)
     {
-        await simpleOrderStrategy.SubmitOrder(items);
-    }
-
-    [HttpPost("orchestrated")]
-    public async Task CheckoutOrchestrated(List<CartItem> items)
-    {
-        await orchestratedOrderStrategy.SubmitOrder(items);
+        await orderService.SubmitOrder(items, strategy);
     }
 }
