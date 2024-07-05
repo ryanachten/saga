@@ -1,20 +1,20 @@
 version: "3.4"
 
 services:
-  cartservice:
-    image: ${DOCKER_REGISTRY-}cartservice
+  orderservice:
+    image: ${DOCKER_REGISTRY-}orderservice
     ports:
-      - "8080"
+      - 8080
     build:
       context: .
-      dockerfile: CartService/Dockerfile
+      dockerfile: OrderService/Dockerfile
 
   dairyservice:
     image: ${DOCKER_REGISTRY-}dairyservice
     ports:
-      - "80"
+      - 80
     environment:
-        ASPNETCORE_HTTP_PORTS: 80
+      ASPNETCORE_HTTP_PORTS: 80
     build:
       context: .
       dockerfile: DairyService/Dockerfile
@@ -26,9 +26,9 @@ services:
   produceservice:
     image: ${DOCKER_REGISTRY-}produceservice
     ports:
-      - "80"
+      - 80
     environment:
-        ASPNETCORE_HTTP_PORTS: 80
+      ASPNETCORE_HTTP_PORTS: 80
     build:
       context: .
       dockerfile: ProduceService/Dockerfile
@@ -40,9 +40,9 @@ services:
   notificationservice:
     image: ${DOCKER_REGISTRY-}notificationservice
     ports:
-      - "80"
+      - 80
     environment:
-        ASPNETCORE_HTTP_PORTS: 80
+      ASPNETCORE_HTTP_PORTS: 80
     build:
       context: .
       dockerfile: NotificationService/Dockerfile
@@ -54,9 +54,9 @@ services:
   deliveryservice:
     image: ${DOCKER_REGISTRY-}deliveryservice
     ports:
-      - "80"
+      - 80
     environment:
-        ASPNETCORE_HTTP_PORTS: 80
+      ASPNETCORE_HTTP_PORTS: 80
     build:
       context: .
       dockerfile: DeliveryService/Dockerfile
@@ -64,3 +64,9 @@ services:
       default:
         aliases:
           - delivery-service
+
+  rabbitmq:
+    image: masstransit/rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
