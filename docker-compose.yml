@@ -8,6 +8,8 @@ services:
     build:
       context: .
       dockerfile: OrderService/Dockerfile
+    depends_on:
+      - rabbitmq
 
   dairyservice:
     image: ${DOCKER_REGISTRY-}dairyservice

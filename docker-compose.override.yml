@@ -5,6 +5,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Logging__LogLevel__System.Net.Http.HttpClient=None
+      - RabbitMq__HostUri=rabbitmq
     ports:
       - "5099:8080"
 

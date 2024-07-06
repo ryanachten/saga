@@ -11,8 +11,8 @@ public class OrderController(IOrderService orderService) : ControllerBase
 {
 
     [HttpPost]
-    public async Task Create(List<OrderItem> items, [FromQuery] OrderStrategy? strategy)
+    public async Task Create(Order order, [FromQuery] OrderStrategy? strategy)
     {
-        await orderService.SubmitOrder(items, strategy);
+        await orderService.SubmitOrder(order, strategy);
     }
 }

@@ -8,7 +8,7 @@ namespace OrderService.Strategies.OrderStrategy;
 
 public interface ISimpleOrderStrategy
 {
-    Task SubmitOrder(IEnumerable<OrderItem> items);
+    Task SubmitOrder(Order order);
 }
 
 /// <summary>
@@ -22,18 +22,19 @@ public class SimpleOrderStrategy(
     INotificationClient notificationClient
 ) : BaseOrderStrategy, IOrderStrategy, ISimpleOrderStrategy
 {
-    public async Task SubmitOrder(IEnumerable<OrderItem> items)
+    public async Task SubmitOrder(Order order)
     {
+        // TODO: refactor to use full contract across stack
         logger.LogInformation("**** Submitting order ****");
-        foreach (var item in items) logger.LogInformation("item: {Name} count: {Count}", item.Name, item.Count);
+        foreach (var item in order.Items) logger.LogInformation("item: {Name} count: {Count}", item.Name, item.Count);
 
-        var dairyItems = GetDairyItems(items);
+        var dairyItems = GetDairyItems(order.Items);
         await dairyClient.SaveOrder(dairyItems);
 
-        var produceItems = GetProduceItems(items);
+        var produceItems = GetProduceItems(order.Items);
         await produceClient.SaveOrder(produceItems);
 
-        var orderId = await deliveryClient.SaveOrder(GetDeliveryOrder(items));
+        var orderId = await deliveryClient.SaveOrder(GetDeliveryOrder(order.Items));
 
         await notificationClient.PushOrderNotification(orderId);
     }

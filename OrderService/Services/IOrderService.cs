@@ -5,5 +5,5 @@ namespace OrderService.Services;
 
 public interface IOrderService
 {
-    Task SubmitOrder(IEnumerable<OrderItem> items, OrderStrategy? strategy = OrderStrategy.SIMPLE);
+    Task SubmitOrder(Order order, OrderStrategy? strategy = OrderStrategy.SIMPLE);
 }

@@ -1,12 +1,11 @@
-﻿using OrderService.Models;
-using MassTransit;
+﻿using MassTransit;
+using OrderService.Models;
 
 namespace OrderService.Services;
 
-// TODO: should be consuming a model called order item, not cart item
-public class OrderConsumer : IConsumer<OrderItem>
+public class OrderConsumer : IConsumer<Order>
 {
-    public Task Consume(ConsumeContext<OrderItem> context)
+    public Task Consume(ConsumeContext<Order> context)
     {
         throw new NotImplementedException();
     }

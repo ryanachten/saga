@@ -10,13 +10,13 @@ public class OrderService(
     IEventOrderStrategy eventOrderStrategy
 ) : IOrderService
 {
-    public Task SubmitOrder(IEnumerable<OrderItem> items, OrderStrategy? strategy = OrderStrategy.SIMPLE)
+    public Task SubmitOrder(Order order, OrderStrategy? strategy = OrderStrategy.SIMPLE)
     {
         return strategy switch
         {
-            OrderStrategy.ORCHESTRATED => orchestratedOrderStrategy.SubmitOrder(items),
-            OrderStrategy.EVENT => eventOrderStrategy.SubmitOrder(items),
-            _ => simpleOrderStrategy.SubmitOrder(items),
+            OrderStrategy.ORCHESTRATED => orchestratedOrderStrategy.SubmitOrder(order),
+            OrderStrategy.EVENT => eventOrderStrategy.SubmitOrder(order),
+            _ => simpleOrderStrategy.SubmitOrder(order),
         };
     }
 }

@@ -8,7 +8,7 @@ namespace OrderService.Strategies.OrderStrategy;
 
 public interface IOrchestratedOrderStrategy
 {
-    Task SubmitOrder(IEnumerable<OrderItem> items);
+    Task SubmitOrder(Order order);
 }
 
 /// <summary>
@@ -22,18 +22,19 @@ public class OrchestratedOrderStrategy(
     INotificationClient notificationClient
 ) : BaseOrderStrategy, IOrderStrategy, IOrchestratedOrderStrategy
 {
-    public async Task SubmitOrder(IEnumerable<OrderItem> items)
+    public async Task SubmitOrder(Order order)
     {
+        // TODO: refactor to use full contract across stack
         logger.LogInformation("**** Submitting order ****");
-        foreach (var item in items) logger.LogInformation("item: {Name} count: {Count}", item.Name, item.Count);
+        foreach (var item in order.Items) logger.LogInformation("item: {Name} count: {Count}", item.Name, item.Count);
 
-        var dairyItems = GetDairyItems(items);
+        var dairyItems = GetDairyItems(order.Items);
         await dairyClient.SaveOrder(dairyItems);
 
-        var produceItems = GetProduceItems(items);
+        var produceItems = GetProduceItems(order.Items);
         await produceClient.SaveOrder(produceItems, () => dairyClient.DeleteOrder(dairyItems));
 
-        var orderId = await deliveryClient.SaveOrder(GetDeliveryOrder(items), async () =>
+        var orderId = await deliveryClient.SaveOrder(GetDeliveryOrder(order.Items), async () =>
         {
             await dairyClient.DeleteOrder(dairyItems);
             await produceClient.DeleteOrder(produceItems);

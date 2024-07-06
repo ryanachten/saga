@@ -1,24 +1,24 @@
-﻿using OrderService.Models;
-using MassTransit;
+﻿using MassTransit;
+using OrderService.Models;
 
 namespace OrderService.Strategies.OrderStrategy;
 
 public interface IEventOrderStrategy
 {
-    Task SubmitOrder(IEnumerable<OrderItem> items);
+    Task SubmitOrder(Order items);
 }
 
 /// <summary>
 /// Submits an order without transaction management
 /// </summary>
 public class EventOrderStrategy(
-    IBus bus,
+    IPublishEndpoint publishEndpoint,
     ILogger<SimpleOrderStrategy> logger
 ) : BaseOrderStrategy, IOrderStrategy, IEventOrderStrategy
 {
-    public async Task SubmitOrder(IEnumerable<OrderItem> items)
+    public async Task SubmitOrder(Order order)
     {
         logger.LogInformation("**** Submitting order ****");
-        await bus.Publish(items.ToArray());
+        await publishEndpoint.Publish(order);
     }
 }
