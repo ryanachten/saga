@@ -1,4 +1,4 @@
-﻿namespace OrderService.Models.Enums;
+﻿namespace Common.Contracts.Enums;
 
 public enum ItemType
 {

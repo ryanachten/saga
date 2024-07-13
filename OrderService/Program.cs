@@ -1,9 +1,8 @@
-using MassTransit;
+using Common.Extensions;
 using OrderService.Clients.DairyClient;
 using OrderService.Clients.DeliveryClient;
 using OrderService.Clients.NotificationClient;
 using OrderService.Clients.ProduceClient;
-using OrderService.Configuration;
 using OrderService.Extensions;
 using System.Text.Json.Serialization;
 
@@ -14,25 +13,7 @@ builder.Services.AddControllers().AddJsonOptions(opt =>
     opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-builder.Services.AddMassTransit(x =>
-{
-    var rabbitMqOptions = new RabbitMqOptions();
-    builder.Configuration.GetRequiredSection(RabbitMqOptions.Key).Bind(rabbitMqOptions);
-
-    x.SetKebabCaseEndpointNameFormatter();
-    x.UsingRabbitMq((context, cfg) =>
-    {
-
-        cfg.Host(rabbitMqOptions.HostUri, "/", h =>
-        {
-            h.Username(rabbitMqOptions.HostPassword);
-            h.Password(rabbitMqOptions.HostUserName);
-        });
-
-        cfg.ConfigureEndpoints(context);
-    });
-    x.AddConsumers(typeof(Program).Assembly);
-});
+builder.Services.AddRabbitMq(builder.Configuration, typeof(Program).Assembly);
 
 builder.Services.AddOrderStrategies();
 

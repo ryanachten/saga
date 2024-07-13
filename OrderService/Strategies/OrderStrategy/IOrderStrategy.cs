@@ -1,4 +1,4 @@
-﻿using OrderService.Models;
+﻿using Common.Contracts;
 
 namespace OrderService.Strategies.OrderStrategy;
 

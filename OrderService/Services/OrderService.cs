@@ -1,4 +1,4 @@
-﻿using OrderService.Models;
+﻿using Common.Contracts;
 using OrderService.Models.Enums;
 using OrderService.Strategies.OrderStrategy;
 

@@ -1,5 +1,5 @@
-﻿using MassTransit;
-using OrderService.Models;
+﻿using Common.Contracts;
+using MassTransit;
 
 namespace OrderService.Strategies.OrderStrategy;
 

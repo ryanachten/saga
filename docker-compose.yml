@@ -24,6 +24,8 @@ services:
       default:
         aliases:
           - dairy-service
+    depends_on:
+      - rabbitmq
 
   produceservice:
     image: ${DOCKER_REGISTRY-}produceservice

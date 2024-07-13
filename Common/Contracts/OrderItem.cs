@@ -1,6 +1,6 @@
-﻿using OrderService.Models.Enums;
+﻿using Common.Contracts.Enums;
 
-namespace OrderService.Models;
+namespace Common.Contracts;
 
 public class OrderItem
 {

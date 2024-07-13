@@ -1,8 +1,8 @@
-﻿using OrderService.Clients.DairyClient;
+﻿using Common.Contracts;
+using Common.Contracts.Enums;
+using OrderService.Clients.DairyClient;
 using OrderService.Clients.DeliveryClient;
 using OrderService.Clients.ProduceClient;
-using OrderService.Models;
-using OrderService.Models.Enums;
 
 namespace OrderService.Strategies.OrderStrategy;
 

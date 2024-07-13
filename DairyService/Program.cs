@@ -1,12 +1,12 @@
-var builder = WebApplication.CreateBuilder(args);
+using Common.Extensions;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-var app = builder.Build();
+builder.Services.AddRabbitMq(builder.Configuration, typeof(Program).Assembly);
 
-// Configure the HTTP request pipeline.
+var app = builder.Build();
 
 app.UseAuthorization();
 

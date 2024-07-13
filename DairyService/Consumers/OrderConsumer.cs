@@ -1,7 +1,7 @@
-﻿using MassTransit;
-using OrderService.Models;
+﻿using Common.Contracts;
+using MassTransit;
 
-namespace OrderService.Services;
+namespace DairyService.Consumers;
 
 public class OrderConsumer : IConsumer<Order>
 {

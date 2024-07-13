@@ -1,4 +1,4 @@
-﻿namespace OrderService.Models;
+﻿namespace Common.Contracts;
 
 public class Recipient
 {
