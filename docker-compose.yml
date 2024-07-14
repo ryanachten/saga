@@ -40,6 +40,9 @@ services:
       default:
         aliases:
           - produce-service
+    depends_on:
+      - rabbitmq
+    
 
   notificationservice:
     image: ${DOCKER_REGISTRY-}notificationservice

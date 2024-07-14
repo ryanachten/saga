@@ -5,21 +5,14 @@ namespace ProduceService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class OrderController : ControllerBase
+public class OrderController(ILogger<OrderController> logger) : ControllerBase
 {
-    private readonly ILogger<OrderController> _logger;
-
-    public OrderController(ILogger<OrderController> logger)
-    {
-        _logger = logger;
-    }
-
     [HttpGet("{name}")]
     public ActionResult Get(string name)
     {
-        if (Stock.Items.ContainsKey(name))
+        if (Stock.Items.TryGetValue(name, out int value))
         {
-            return Ok(new { Item = name, Stock = Stock.Items[name] });
+            return Ok(new { Item = name, Stock = value });
         }
 
         return NotFound();
@@ -34,7 +27,7 @@ public class OrderController : ControllerBase
             {
                 Stock.Items[item.Name] -= item.Count;
             }
-            _logger.LogInformation("Added produce order. Stock now: {item.Name} count: {Stock.Items[item.Name]}", item.Name, Stock.Items[item.Name]);
+            logger.LogInformation("Produce order fulfilled. Stock now: {Name} count: {Stock}", item.Name, Stock.Items[item.Name]);
         }
     }
 
@@ -47,7 +40,7 @@ public class OrderController : ControllerBase
             {
                 Stock.Items[item.Name] += item.Count;
             }
-            _logger.LogInformation("Deleted produce order. Stock now: {item.Name} count: {Stock.Items[item.Name]}", item.Name, Stock.Items[item.Name]);
+            logger.LogInformation("Produce order removed. Stock now: {Name} count: {Stock}", item.Name, Stock.Items[item.Name]);
         }
     }
 }

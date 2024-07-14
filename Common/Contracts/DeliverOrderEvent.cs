@@ -2,8 +2,8 @@
 
 namespace Common.Contracts;
 
-public class DeliverOrderEvent
+public class DeliverOrderEvent(Guid orderId, Recipient recipient)
 {
-    public required Guid OrderId { get; set; }
-    public required Recipient Recipient { get; set; }
+    public Guid OrderId => orderId;
+    public Recipient Recipient => recipient;
 }

@@ -1,15 +1,19 @@
-var builder = WebApplication.CreateBuilder(args);
+using Common.Extensions;
+using MassTransit;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-var app = builder.Build();
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingCommonRabbitMq(builder.Configuration, typeof(Program).Assembly);
+});
 
-// Configure the HTTP request pipeline.
+var app = builder.Build();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();
