@@ -1,6 +1,6 @@
-﻿using Common.Contracts.Enums;
+﻿using Common.Models.Enums;
 
-namespace Common.Contracts;
+namespace Common.Models;
 
 public class OrderItem
 {

@@ -1,4 +1,4 @@
-﻿namespace Common.Contracts.Enums;
+﻿namespace Common.Models.Enums;
 
 public enum ItemType
 {

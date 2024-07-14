@@ -1,4 +1,6 @@
-﻿namespace Common.Contracts;
+﻿using Common.Models;
+
+namespace OrderService.Models;
 
 public class Order
 {

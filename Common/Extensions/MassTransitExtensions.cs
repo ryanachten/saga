@@ -1,33 +1,33 @@
 ﻿using Common.Configuration;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Common.Extensions;
 
 public static class MassTransitExtensions
 {
-    public static void AddRabbitMq(this IServiceCollection services, IConfigurationManager configuration, System.Reflection.Assembly assembly)
+    /// <summary>
+    /// Extension for shared MassTransit and RabbitMQ configuration
+    /// </summary>
+    public static void UsingCommonRabbitMq(this IBusRegistrationConfigurator registration, IConfigurationManager configuration, Assembly assembly)
     {
-        services.AddMassTransit(x =>
+        var rabbitMqOptions = new RabbitMqOptions();
+        configuration.GetRequiredSection(RabbitMqOptions.Key).Bind(rabbitMqOptions);
+
+        registration.SetKebabCaseEndpointNameFormatter();
+        registration.UsingRabbitMq((context, cfg) =>
         {
-            var rabbitMqOptions = new RabbitMqOptions();
-            configuration.GetRequiredSection(RabbitMqOptions.Key).Bind(rabbitMqOptions);
 
-            x.SetKebabCaseEndpointNameFormatter();
-            x.UsingRabbitMq((context, cfg) =>
+            cfg.Host(rabbitMqOptions.HostUri, "/", h =>
             {
-
-                cfg.Host(rabbitMqOptions.HostUri, "/", h =>
-                {
-                    h.Username(rabbitMqOptions.HostPassword);
-                    h.Password(rabbitMqOptions.HostUserName);
-                });
-
-                cfg.ConfigureEndpoints(context);
+                h.Username(rabbitMqOptions.HostPassword);
+                h.Password(rabbitMqOptions.HostUserName);
             });
 
-            x.AddConsumers(assembly);
+            cfg.ConfigureEndpoints(context);
         });
+
+        registration.AddConsumers(assembly);
     }
 }

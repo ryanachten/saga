@@ -1,5 +1,5 @@
-﻿using Common.Contracts;
-using Common.Contracts.Enums;
+﻿using Common.Models;
+using Common.Models.Enums;
 using OrderService.Clients.DairyClient;
 using OrderService.Clients.DeliveryClient;
 using OrderService.Clients.ProduceClient;

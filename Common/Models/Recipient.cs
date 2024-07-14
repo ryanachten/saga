@@ -1,4 +1,4 @@
-﻿namespace Common.Contracts;
+﻿namespace Common.Models;
 
 public class Recipient
 {

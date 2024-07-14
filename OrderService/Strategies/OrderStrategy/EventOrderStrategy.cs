@@ -1,5 +1,6 @@
 ﻿using Common.Contracts;
 using MassTransit;
+using OrderService.Models;
 
 namespace OrderService.Strategies.OrderStrategy;
 
@@ -19,6 +20,11 @@ public class EventOrderStrategy(
     public async Task SubmitOrder(Order order)
     {
         logger.LogInformation("**** Submitting order ****");
-        await publishEndpoint.Publish(order);
+        await publishEndpoint.Publish(new CreateOrderEvent()
+        { 
+            OrderId = Guid.NewGuid(),
+            Recipient = order.Recipient,
+            Items = order.Items,
+        });
     }
 }

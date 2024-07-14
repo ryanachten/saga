@@ -1,8 +1,8 @@
-﻿using Common.Contracts;
-using OrderService.Clients.DairyClient;
+﻿using OrderService.Clients.DairyClient;
 using OrderService.Clients.DeliveryClient;
 using OrderService.Clients.NotificationClient;
 using OrderService.Clients.ProduceClient;
+using OrderService.Models;
 
 namespace OrderService.Strategies.OrderStrategy;
 

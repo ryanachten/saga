@@ -1,5 +1,5 @@
-using Common.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using OrderService.Models;
 using OrderService.Models.Enums;
 using OrderService.Services;
 
