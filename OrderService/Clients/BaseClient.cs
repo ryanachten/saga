@@ -3,16 +3,8 @@ using System.Text.Json;
 
 namespace OrderService.Clients
 {
-    public abstract class BaseClient
+    public abstract class BaseClient(HttpClient httpClient, ILogger<BaseClient> logger)
     {
-        private readonly HttpClient _httpClient;
-        private readonly ILogger<BaseClient> _logger;
-
-        public BaseClient(HttpClient httpClient, ILogger<BaseClient> logger)
-        {
-            _httpClient = httpClient;
-            _logger = logger;
-        }
 
         /// <summary>
         /// Compensable request. Will execute a compensating request to rollback prior transactions on failure.
@@ -24,14 +16,14 @@ namespace OrderService.Clients
         {
             try
             {
-                var response = await _httpClient.SendAsync(request);
+                var response = await httpClient.SendAsync(request);
                 return response;
             }
             catch (Exception ex)
             {
                 if (compensatingRequest != null)
                 {
-                    _logger.LogError("Error sending request: {ex.Message} - executing compensating request", ex.Message);
+                    logger.LogError(ex, "Error sending request: {Message} - executing compensating request", ex.Message);
 
                     await compensatingRequest();
                 }

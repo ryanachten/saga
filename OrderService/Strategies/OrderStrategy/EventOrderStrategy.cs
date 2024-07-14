@@ -13,7 +13,7 @@ public interface IEventOrderStrategy
 /// </summary>
 public class EventOrderStrategy(
     IPublishEndpoint publishEndpoint,
-    ILogger<SimpleOrderStrategy> logger
+    ILogger<EventOrderStrategy> logger
 ) : BaseOrderStrategy, IOrderStrategy, IEventOrderStrategy
 {
     public async Task SubmitOrder(Order order)
