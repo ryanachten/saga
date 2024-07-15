@@ -42,7 +42,6 @@ services:
           - produce-service
     depends_on:
       - rabbitmq
-    
 
   notificationservice:
     image: ${DOCKER_REGISTRY-}notificationservice
@@ -71,6 +70,8 @@ services:
       default:
         aliases:
           - delivery-service
+    depends_on:
+      - rabbitmq
 
   rabbitmq:
     image: masstransit/rabbitmq

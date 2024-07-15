@@ -5,15 +5,8 @@ namespace DeliveryService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class OrderController : ControllerBase
+public class OrderController(ILogger<OrderController> logger) : ControllerBase
 {
-    private readonly ILogger<OrderController> _logger;
-
-    public OrderController(ILogger<OrderController> logger)
-    {
-        _logger = logger;
-    }
-
     [HttpGet]
     public ActionResult Get()
     {
@@ -25,7 +18,7 @@ public class OrderController : ControllerBase
     {
         Orders.Items.Add(order);
 
-        _logger.LogInformation("Dispatching order: {order.Id}", order.Id);
+        logger.LogInformation("Dispatching order delivery: {Id}", order.Id);
 
         return Ok(order.Id);
     }
@@ -33,7 +26,7 @@ public class OrderController : ControllerBase
     [HttpDelete("{id}")]
     public void Delete(Guid id)
     {
-        _logger.LogWarning("Deleting order: {id}", id);
+        logger.LogWarning("Deleting order delivery: {Id}", id);
 
         Orders.Items.RemoveAll(x => x.Id == id);
     }

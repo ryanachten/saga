@@ -33,7 +33,9 @@ public class OrderSateMachine : MassTransitStateMachine<OrderSagaState>
     // Saga state - resulted from previously occurred events
     public required State FulfillingOrder { get; set; }
     public required State DeliveringOrder { get; set; }
-    public required State Delivered { get; set; }
+
+    // TODO: ideally notifications would be sent for each state change instead of as an explicit step
+    public required State NotifyingCustomer { get; set; }
     public required State Completed { get; set; }
 
     // Saga events - may result in state changes
@@ -43,6 +45,7 @@ public class OrderSateMachine : MassTransitStateMachine<OrderSagaState>
     public required Event<ProduceOrderFulfilledEvent> ProduceOrderFulFilled { get; set; }
     public required Event OrderFulfilled { get; set; }
     public required Event<DeliverOrderEvent> DeliverOrder { get; set; }
+    public required Event<OrderDeliveredEvent> OrderDelivered { get; set; }
     public required Event<NotifyCustomerEvent> NotifyCustomer { get; set; }
 
     public OrderSateMachine()
@@ -66,6 +69,12 @@ public class OrderSateMachine : MassTransitStateMachine<OrderSagaState>
             .TransitionTo(DeliveringOrder),
             
             Ignore(FulfillOrder)); // Ignore requests to fulfill an order that is already fulfilled
+
+        During(DeliveringOrder,
+            When(OrderDelivered)
+            .Finalize(),
+
+            Ignore(DeliverOrder)); // Ignore requests to deliver an order that is already being delivered
     }
 
     /// <summary>
@@ -80,6 +89,7 @@ public class OrderSateMachine : MassTransitStateMachine<OrderSagaState>
         Event(() => DairyOrderFulFilled, x => x.CorrelateById(context => context.Message.OrderId));
         Event(() => ProduceOrderFulFilled, x => x.CorrelateById(context => context.Message.OrderId));
         Event(() => DeliverOrder, x => x.CorrelateById(context => context.Message.OrderId));
+        Event(() => OrderDelivered, x => x.CorrelateById(context => context.Message.OrderId));
         Event(() => NotifyCustomer, x => x.CorrelateById(context => context.Message.OrderId));
     }
 }
